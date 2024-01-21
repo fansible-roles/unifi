@@ -1,2 +1,25 @@
 ---
 # vars file for unifi-netapp-quadlet
+
+# define the systemD directory for quadlet files
+__unifi_netapp_quadlet_path: "/usr/share/containers/systemd/"
+
+# define the quadlet container file
+__unifi_netapp_quadlet_container: "{{ __unifi_netapp_quadlet_path }}\
+                                   unifi-netapp.container"
+
+# define the quadlet container file
+__unifi_netapp_mongo_quadlet_container: "{{ __unifi_netapp_quadlet_path }}/\
+                                         mongo-unifi.container"
+
+# define the quadlet network path
+__unifi_netapp_quadlet_network_path: "{{ __unifi_netapp_quadlet_path }}\
+                              /unifi-netapp.network"
+
+# define the quadlet pod path
+__unifi_netapp_quadlet_pod_path: "{{ __unifi_netapp_quadlet_path }}\
+                              /unifi-quadlet.pod"
+
+# static place where the initdb file will be stored
+# (this file will be converted to a podman secret)
+__unifi_netapp_initdb: "/etc/initdb.js"

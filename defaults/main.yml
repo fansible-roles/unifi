@@ -1,2 +1,38 @@
 ---
 # defaults file for unifi-netapp-quadlet
+unifi_netapp_quadlet:
+  image: "lscr.io/linuxserver/unifi-network-application"
+  tag: "7.5.187-ls15"
+
+unifi_netapp_quadlet_env:
+  PUID: 1000
+  PGID: 1000
+  TZ: "Etc/UTC"
+  MONGO_USER: "{{ lookup('env', 'MONGO_USER') | default('unifi', true) }}"
+  MONGO_PASS: "{{ lookup('env', 'MONGO_PASS') | default('unifi', true) }}"
+  MONGO_HOST: "192.168.11.2"
+  MONGO_PORT: "27017"
+  MONGO_DBNAME: "{{ lookup('env', 'MONGO_DBNAME') | default('unifi', true) }}"
+  MEM_LIMIT: 1024
+  MEM_STARTUP: 1024
+
+unifi_netapp_quadlet_volumes:
+  - name: config
+    path: /srv/unifi/config
+    dest: /config
+
+unifi_netapp_mongo_quadlet:
+  image: "docker.io/library/mongo"
+  tag: "4.4.26"
+
+unifi_netapp_mongo_quadlet_volumes:
+  - name: mongodb
+    path: /srv/unifi/mongodb
+    dest: /data/db
+
+unifi_netapp_mongodb:
+  "{{ lookup('env', 'MONGO_DBNAME') | default('unifi', true) }}"
+unifi_netapp_mongodb_user:
+  "{{ lookup('env', 'MONGO_USER') | default('unifi', true) }}"
+unifi_netapp_mongodb_pass:
+  "{{ lookup('env', 'MONGO_PASS') | default('unifi', true) }}"

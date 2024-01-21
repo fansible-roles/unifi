@@ -1,0 +1,2 @@
+db.getSiblingDB("{{ unifi_netapp_mongodb }}").createUser({user: "{{ unifi_netapp_mongodb_user }}", pwd: "{{ unifi_netapp_mongodb_pass }}", roles: [{role: "dbOwner", db: "{{ unifi_netapp_mongodb }}"}]});
+db.getSiblingDB("{{ unifi_netapp_mongodb }}_stat").createUser({user: "{{ unifi_netapp_mongodb_user }}", pwd: "{{ unifi_netapp_mongodb_pass }}", roles: [{role: "dbOwner", db: "{{ unifi_netapp_mongodb }}_stat"}]});

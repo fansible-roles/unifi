@@ -1,0 +1,20 @@
+# MongoDB Used by Unifi Network Application Quadlet Container
+[Unit]
+Description=MongoDB for Unifi Network Application
+After=network.target
+
+[Container]
+Image={{ unifi_netapp_mongo_quadlet.image }}:{{ unifi_netapp_mongo_quadlet.tag }}
+ContainerName=mongo-unifi
+IP=192.168.11.2
+LogDriver=journald
+#Pod=unifi-quadlet
+Network=unifi-netapp.network
+Volume={{ __unifi_netapp_initdb }}:/docker-entrypoint-initdb.d/mongo-init.js:Z
+{% for vol in unifi_netapp_mongo_quadlet_volumes %}
+Volume={{ vol.path }}:{{ vol.dest }}:shared
+{% endfor %}
+
+[Install]
+# Start by default on boot
+WantedBy=network.target multi-user.target default.target

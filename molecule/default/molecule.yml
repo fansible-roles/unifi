@@ -4,9 +4,23 @@ dependency:
 driver:
   name: podman
 platforms:
-  - name: instance
-    image: quay.io/centos/centos:stream8
+  # pinp - podman rootfull in podman rootless
+  - name: pinp
+    image: quay.io/podman/stable
     pre_build_image: true
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - ~/dev:/tmp/test
+    devices:
+      - /dev/fuse
+    security_opts:
+      - unmask=ALL
+      - label=disable
+    privileged: true
 provisioner:
   name: ansible
 verifier:

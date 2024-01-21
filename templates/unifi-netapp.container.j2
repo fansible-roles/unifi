@@ -1,0 +1,30 @@
+# Unifi Network Application Quadlet Container
+[Unit]
+Description=Unifi Network Application
+Requires=mongo-unifi.service
+After=mongo-unifi.service
+
+[Container]
+Image={{ unifi_netapp_quadlet.image }}:{{ unifi_netapp_quadlet.tag }}
+ContainerName=unifi-netapp
+LogDriver=journald
+Network=unifi-netapp.network
+#Pod=unifi-quadlet
+{% for key, value in unifi_netapp_quadlet_env.items() %}
+Environment={{ key }}={{ value }}
+{% endfor %}
+{% for vol in unifi_netapp_quadlet_volumes %}
+Volume={{ vol.path }}:{{ vol.dest }}:shared
+{% endfor %}
+PublishPort=8443:8443/tcp
+PublishPort=3478:3478/udp
+PublishPort=10001:10001/udp
+PublishPort=8080:8080/tcp
+PublishPort=1900:1900/udp
+PublishPort=8843:8843/tcp
+PublishPort=8880:8880/tcp
+PublishPort=5514:5514/udp
+
+[Install]
+# Start by default on boot
+WantedBy=network.target multi-user.target default.target

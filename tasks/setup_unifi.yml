@@ -1,0 +1,24 @@
+---
+- name: "Assuring Unifi Volumes Exists"
+  ansible.builtin.file:
+    path: "{{ vol.path }}"
+    mode: "{{ vol.mode | default('0755') }}"
+    state: directory
+  loop: "{{ unifi_netapp_quadlet_volumes }}"
+  loop_control:
+    loop_var: vol
+
+- name: "Defining the Quadlet Service"
+  ansible.builtin.set_fact:
+    __quadlet_name: "unifi-netapp"
+
+- name: "Installing {{ __quadlet_name | capitalize }} Quadlet Template"
+  ansible.builtin.template:
+    src: unifi-netapp.container.j2
+    dest: "{{ __unifi_netapp_quadlet_container }}"
+  notify:
+    - daemon-reload
+    - quadlet-restart
+
+- name: "Triggering Handlers"
+  ansible.builtin.meta: flush_handlers

@@ -1,38 +1,81 @@
-Role Name
+Unifi Network Application Quadlet
 =========
 
-A brief description of the role goes here.
+Deploy the Unifi Network Application as Self Hosted using Podman Quadlet
+containers.  
+
+This project implements an Ansible Automation to deploy the mongoDB and Unifi
+Network Application using the [Linux Server
+Containers](https://github.com/linuxserver/docker-unifi-network-application)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* `containers.podman`
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+* `unifi_netapp_quadlet`: (`dict`) define the image and tag to for the unifi
+  container.  
+* `unifi_netapp_quadlet_env`: (`dict`) Define environment variables to be used
+  on the container.  
+* `unifi_netapp_quadlet_volumes`: (`list`) A list of volumes and paths to be
+  monted on the container.  
+* `unifi_netapp_mongodb_quadlet_volumes`: (`list`) A list of volumes to be
+  mounted on the mongoDB container.  
+* `unifi_netapp_mongo_quadlet`: (`dict`) Define the MongoDB container image and
+  ta to used.  
+* `unifi_netapp_mongodb`: (`str`) The mongoDB database name  
+* `unifi_netapp_mongodb_user`: (`str`) The mongodb username  
+* `unifi_netapp_mongodb_pass`: (`str`) The mongoDB password
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+* Minimal Example:  
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+- name: Deploy Unifi With Defaults
+  hosts: all
+  gather_facts: false
+  roles:
+    - unifi-netapp-quadlet
+```
+
+Developing and Testing
+----------------------
+
+This role was developed using [ansible
+molecule](https://ansible.readthedocs.io/projects/molecule/).
+The use of molecule is optional but recommended.  
+  
+* Testing:  
+Unit tests for checking code regression are available in the [`tests` directory](tests/).
+use the `verify` or `test` commands, e.g:  
+
+```bash
+molecule test
+```
+
+while developing use `verify` instead:  
+
+```bash
+molecule create
+molecule verify
+```
 
 License
 -------
 
-BSD
+[GPL-2.0-or-later](https://spdx.org/licenses/GPL-2.0-or-later.html)
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+@mrbrandao - Igor Brandão

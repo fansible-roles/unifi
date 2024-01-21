@@ -1,0 +1,7 @@
+---
+- name: "Installing Unifi Quadlet Network"
+  ansible.builtin.template:
+    src: unifi-quadlet.network.j2
+    dest: "{{ __unifi_netapp_quadlet_network_path }}"
+  notify:
+    - daemon-reload

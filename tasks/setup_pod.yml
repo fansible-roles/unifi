@@ -1,0 +1,7 @@
+---
+- name: "Installing Unifi Quadlet Pod"
+  ansible.builtin.template:
+    src: unifi-quadlet.pod.j2
+    dest: "{{ __unifi_netapp_quadlet_pod_path }}"
+  notify:
+    - daemon-reload

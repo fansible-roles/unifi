@@ -1,0 +1,30 @@
+---
+- name: "Assuring MongoDB Volumes Exists"
+  ansible.builtin.file:
+    path: "{{ vol.path }}"
+    mode: "{{ vol.mode | default('0755') }}"
+    state: directory
+  loop: "{{ unifi_netapp_mongo_quadlet_volumes }}"
+  loop_control:
+    loop_var: vol
+
+- name: "Installing the InitDB Template"
+  ansible.builtin.template:
+    src: init-mongo.js.j2
+    dest: "{{ __unifi_netapp_initdb }}"
+    mode: "0644"
+
+- name: "Defining the Quadlet Service"
+  ansible.builtin.set_fact:
+    __quadlet_name: "mongo-unifi"
+
+- name: "Installing MongoDB Quadlet Template"
+  ansible.builtin.template:
+    src: mongo-quadlet.container.j2
+    dest: "{{ __unifi_netapp_mongo_quadlet_container }}"
+  notify:
+    - daemon-reload
+    - quadlet-restart
+
+- name: "Triggering Handlers"
+  ansible.builtin.meta: flush_handlers
