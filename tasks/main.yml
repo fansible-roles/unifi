@@ -1,6 +1,6 @@
 ---
-- name: "Including Quadlet Network Setup"
-  ansible.builtin.include_tasks: setup_network.yml
+    #- name: "Including Quadlet Network Setup"
+    #  ansible.builtin.include_tasks: setup_network.yml
 
     # will be enable in podman v4.9
     #- name: "Including Quadlet Pod Setup"

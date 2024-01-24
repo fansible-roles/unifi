@@ -8,13 +8,13 @@ After=mongo-unifi.service
 Image={{ unifi_netapp_quadlet.image }}:{{ unifi_netapp_quadlet.tag }}
 ContainerName=unifi-netapp
 LogDriver=journald
-Network=unifi-netapp.network
+Network=host
 #Pod=unifi-quadlet
 {% for key, value in unifi_netapp_quadlet_env.items() %}
 Environment={{ key }}={{ value }}
 {% endfor %}
 {% for vol in unifi_netapp_quadlet_volumes %}
-Volume={{ vol.path }}:{{ vol.dest }}:shared
+Volume={{ vol.path }}:{{ vol.dest }}:Z
 {% endfor %}
 PublishPort=8443:8443/tcp
 PublishPort=3478:3478/udp

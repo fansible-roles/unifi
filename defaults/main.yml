@@ -8,11 +8,11 @@ unifi_netapp_quadlet_env:
   PUID: 1000
   PGID: 1000
   TZ: "Etc/UTC"
-  MONGO_USER: "{{ lookup('env', 'MONGO_USER') | default('unifi', true) }}"
-  MONGO_PASS: "{{ lookup('env', 'MONGO_PASS') | default('unifi', true) }}"
-  MONGO_HOST: "192.168.11.2"
+  MONGO_USER: "{{ unifi_netapp_mongodb_user }}"
+  MONGO_PASS: "{{ unifi_netapp_mongodb_pass }}"
+  MONGO_DBNAME: "{{ unifi_netapp_mongodb }}"
+  MONGO_HOST: "localhost"
   MONGO_PORT: "27017"
-  MONGO_DBNAME: "{{ lookup('env', 'MONGO_DBNAME') | default('unifi', true) }}"
   MEM_LIMIT: 1024
   MEM_STARTUP: 1024
 
