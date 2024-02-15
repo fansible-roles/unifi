@@ -3,5 +3,6 @@
   ansible.builtin.template:
     src: unifi-quadlet.pod.j2
     dest: "{{ __unifi_netapp_quadlet_pod_path }}"
+    mode: "0644"
   notify:
     - daemon-reload
