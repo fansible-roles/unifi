@@ -36,3 +36,9 @@ unifi_netapp_mongodb_user:
   "{{ lookup('env', 'MONGO_USER') | default('unifi', true) }}"
 unifi_netapp_mongodb_pass:
   "{{ lookup('env', 'MONGO_PASS') | default('unifi', true) }}"
+
+# --- Uninstall Flags ---
+# The flags bellow can be used when uninstalling
+
+# If true will remove all unifi volumes and data when using the uninstall flag
+unifi_netapp_purge: false

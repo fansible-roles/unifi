@@ -1,0 +1,35 @@
+---
+- name: "Stopping Unifi Network Application Services"
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: stopped
+    daemon_reload: true
+    enabled: false
+  loop:
+    - mongo-unifi
+    - unifi-netapp
+
+- name: "Removing Quadlet Files"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ __unifi_netapp_quadlet_container }}"
+    - "{{ __unifi_netapp_mongo_quadlet_container }}"
+  notify:
+    - daemon-reload
+    - daemon-reexec
+
+- name: "Removing InitDB file"
+  ansible.builtin.file:
+    path: "{{ __unifi_netapp_initdb }}"
+    state: absent
+
+- name: "Removing Unifi Volumes"
+  ansible.builtin.file:
+    path: "{{ vol.path }}"
+    state: absent
+  loop: "{{ unifi_netapp_quadlet_volumes }}"
+  loop_control:
+    loop_var: vol
+  when: unifi_netapp_purge | bool

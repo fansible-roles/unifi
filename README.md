@@ -30,6 +30,13 @@ Role Variables
 * `unifi_netapp_mongodb_user`: (`str`) The mongodb username  
 * `unifi_netapp_mongodb_pass`: (`str`) The mongoDB password
 
+#### Uninstall Flags
+
+Uninstall flags only work when running your playbook with the `uninstall` tag.
+
+* `unifi_netapp_purge`: (`bool`) Remove mongo and unifi volumes, and all it's
+  data. (default: `false`)
+
 Dependencies
 ------------
 
@@ -45,7 +52,40 @@ Example Playbook
   hosts: all
   gather_facts: false
   roles:
-    - unifi-netapp-quadlet
+    - unifi
+```
+
+* Uninstalling example:
+
+```yaml
+- name: Uninstall Unifi With Defaults
+  hosts: all
+  gather_facts: false
+  roles:
+    - unifi
+```
+
+Trigger the uninstall playbook with:  
+
+```bash
+ansible-playbook playbook.yml --tags uninstall
+```
+
+* Uninstall and pruge all volumes:  
+
+```yaml
+- name: Deploy Unifi and Remove all Data
+  hosts: all
+  gather_facts: false
+  unifi_netapp_purge: true
+  roles:
+    - unifi
+```
+
+Trigger the uninstall playbook with:  
+
+```bash
+ansible-playbook playbook.yml --tags uninstall
 ```
 
 Developing and Testing

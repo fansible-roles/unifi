@@ -1,0 +1,7 @@
+---
+exclude_paths:
+  - roles/*/molecule/*
+  - roles/*/tests/*
+
+skip_list:
+  - name[template]

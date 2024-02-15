@@ -1,13 +1,23 @@
 ---
-    #- name: "Including Quadlet Network Setup"
-    #  ansible.builtin.include_tasks: setup_network.yml
+# - name: "Including Quadlet Network Setup"
+#   ansible.builtin.include_tasks: setup_network.yml
 
-    # will be enable in podman v4.9
-    #- name: "Including Quadlet Pod Setup"
-    #  ansible.builtin.include_tasks: setup_pod.yml
+# will be enable in podman v4.9
+# - name: "Including Quadlet Pod Setup"
+#   ansible.builtin.include_tasks: setup_pod.yml
 
 - name: "Including MongoDB Setup"
   ansible.builtin.include_tasks: setup_mongo.yml
 
 - name: "Including Unifi NetApp Setup"
   ansible.builtin.include_tasks: setup_unifi.yml
+
+- name: "Uninstall Unifi Network Application"
+  ansible.builtin.include_tasks:
+    file: uninstall.yml
+    apply:
+      tags:
+        - uninstall
+  tags:
+    - uninstall
+    - never

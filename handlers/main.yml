@@ -1,8 +1,15 @@
 ---
+# equivalent to systemctl daemon-reload
 - name: Reload SystemD Daemon
-  ansible.builtin.shell:
-    cmd: systemctl daemon-reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
   listen: daemon-reload
+
+# equivalent to systemctl reset-failed
+- name: Reexec SystemD
+  ansible.builtin.systemd_service:
+    daemon_reexec: true
+  listen: daemon-reexec
 
 - name: Restarting quadlet container
   ansible.builtin.service:
